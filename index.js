@@ -1,6 +1,6 @@
 (function () {
-    var video = document.querySelector('.camera__video'),
-        canvas = document.querySelector('.camera__canvas');
+    var video = document.querySelector('.camera__video');
+    var canvas = document.querySelector('.camera__canvas');
 
 
     var getVideoStream = function (callback) {
@@ -28,6 +28,7 @@
             console.log("getUserMedia not supported");
         }
     };
+
     var filters = {
         invert: function (pixel) {
             pixel[0] = 255 - pixel[0];
@@ -56,27 +57,29 @@
             return pixel;
         }
     };
+
     var pixels;
     var pixel = new Array(3);
     var data;
-    var length;
     var filter;
     var filterName = document.querySelector('.controls__filter').value;
-    var applyFilter = function () {
 
+    var applyFilter = function () {
+        var length;
         pixels = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
         length = pixels.data.length;
         data = pixels.data;
         filter = filters[filterName];
         for (var i = 0; i < length; i += 4) {
-           pixel = filter( [data[i], data[i + 1], data[i + 1]]);
-           data[i] = pixel[0];
-           data[i + 1] = pixel[1];
-           data[i + 2] = pixel[2];
+            pixel = filter([data[i], data[i + 1], data[i + 1]]);
+            data[i] = pixel[0];
+            data[i + 1] = pixel[1];
+            data[i + 2] = pixel[2];
 
         }
         canvas.getContext('2d').putImageData(pixels, 0, 0);
     };
+
     document.querySelector('.controls__filter').onchange = function (event) {
         filterName = event.srcElement.value;
     };
