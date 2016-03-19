@@ -20,11 +20,11 @@ body {
 }
 
 .camera__video {
-    /*visibility: hidden;*/
+    display: none;
 }
 
 .camera__canvas {
-    width: 100%;
+    width: 50%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
